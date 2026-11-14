@@ -1,0 +1,68 @@
+﻿<Window x:Class="TextBlaze.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Text Blaze" Height="640" Width="900"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Text Blaze" FontSize="22" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock x:Name="SyncStatusText" Text="  (ready)" VerticalAlignment="Center" Foreground="Gray" Margin="8,0,0,0"/>
+            <Button x:Name="SyncButton" Content="Sync now" Click="SyncButton_Click" Margin="8,0,0,0" Padding="10,4" Visibility="Collapsed"/>
+            <Button x:Name="SettingsButton" Content="Settings" Click="SettingsButton_Click" Margin="8,0,0,0" Padding="10,4"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" Margin="0,0,8,0">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+                    <Button Content="+ New" Click="NewSnippetButton_Click" Padding="8,3"/>
+                    <Button Content="Delete" Click="DeleteSnippetButton_Click" Margin="6,0,0,0" Padding="8,3"/>
+                </StackPanel>
+                <ListBox x:Name="SnippetList" SelectionChanged="SnippetList_SelectionChanged"
+                         DisplayMemberPath="DisplayName"/>
+            </DockPanel>
+
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="EditorPanel" Margin="8,0,0,0" IsEnabled="False">
+                    <TextBlock Text="Shortcut"/>
+                    <TextBox x:Name="ShortcutBox" TextChanged="Field_Changed" Margin="0,2,0,10"/>
+
+                    <TextBlock Text="Name (optional)"/>
+                    <TextBox x:Name="NameBox" TextChanged="Field_Changed" Margin="0,2,0,10"/>
+
+                    <TextBlock Text="Body — use {date}, {time}, {clipboard}, {cursor}, {form:label}"/>
+                    <TextBox x:Name="BodyBox" AcceptsReturn="True" Height="180" TextWrapping="Wrap"
+                             TextChanged="Field_Changed" Margin="0,2,0,10" VerticalScrollBarVisibility="Auto"/>
+
+                    <TextBlock Text="Images (shown after the text, or where you put {image:0})"/>
+                    <WrapPanel x:Name="ImageList" Margin="0,4,0,4"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,4,0,10">
+                        <Button Content="Add image..." Click="AddImageButton_Click" Padding="8,3"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Notes (optional)"/>
+                    <TextBox x:Name="NotesBox" Height="60" TextWrapping="Wrap"
+                             TextChanged="Field_Changed" Margin="0,2,0,10"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="HintText" Text="Type a shortcut in any app, then press Tab to expand."/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
